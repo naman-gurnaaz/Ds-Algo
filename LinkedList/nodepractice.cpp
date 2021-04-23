@@ -210,7 +210,7 @@ Node * merge2SortedLL(Node *head1, Node *head2){
     Node *finalHead = nullptr;
     Node *finalTail = nullptr;
 
-    if((head1 -> data) < (head2 -> data)){
+    if((head1 -> data) <= (head2 -> data)){
         finalHead = head1;
         finalTail = head1;
         head1 = head1 -> next;
@@ -222,7 +222,7 @@ Node * merge2SortedLL(Node *head1, Node *head2){
     }
 
    while(head1 != nullptr && head2 != nullptr){
-       if(head1 -> data < head2 -> data){
+       if(head1 -> data <= head2 -> data){
            finalTail -> next = head1;
            head1 = head1 -> next;
            finalTail = finalTail -> next;
@@ -235,34 +235,33 @@ Node * merge2SortedLL(Node *head1, Node *head2){
 
     if(head1 == nullptr) {
         finalTail -> next = head2;
-        head2 = head2 -> next;
-        finalTail = finalTail -> next;
     }
 
     if(head2 == nullptr) {
         finalTail -> next = head1;
-        head2 = head1 -> next;
-        finalTail = finalTail -> next;
     }
 
     return finalHead;
 }
 
-Node * SortLLrecursively(Node *head){
+Node *SortLLrecursively(Node *head){
+
+    if((head == nullptr) || (head -> next == nullptr)){
+        return head;
+    }
+
     Node *slow = head;
     Node *fast = head -> next;
     Node *mid;
 
-    while (slow != nullptr){
+    while ((fast != nullptr) && (fast -> next != nullptr)){
 
         slow = slow -> next;
         fast = fast -> next -> next;
-
-        if((fast == nullptr) || (fast -> next == nullptr)){
-            mid = slow->next;
-            slow -> next = nullptr;
-        }
     }
+
+    mid = slow -> next;
+    slow -> next = nullptr;
 
     
     Node *left = SortLLrecursively(head);
@@ -328,6 +327,6 @@ void print(Node *head) {
 int main() {
 
     Node* head1 = takeInput();
-    Node *head2 = reverseLLiteratively(head1);
+    Node *head2 = SortLLrecursively(head1);
     print(head2);
 }
