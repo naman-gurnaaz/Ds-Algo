@@ -1,19 +1,20 @@
 #include <iostream>
 #include <climits>
 using namespace std;
+template <typename T>
 
 class StackUsingArray {
 
-    int *data;
+    T *data;
     int nextIndex;
     int capacity;
 
     public:
 
-    StackUsingArray(int totalSize){
-        data = new int[totalSize];
+    StackUsingArray(){
+        data = new T[4];
         nextIndex = 0;
-        capacity = totalSize;
+        capacity = 4;
     }
 
     int size(){    //returm the no. of elements in my stack
@@ -31,33 +32,43 @@ class StackUsingArray {
         return nextIndex == 0;
     }
 
-    void push(int element){ //insert elelment
+    void push(T element){ //insert elelment
 
         if(nextIndex == capacity){
-            cout << "The stack is full." << endl;
-            return;
+
+            T *newData = new T [capacity * 2];
+            for(int i=0; i<capacity; i++){
+                newData[i] = data[i];
+            }
+            delete []data;
+            data = newData;
+            capacity = capacity * 2;
+
+
+            /*cout << "The stack is full." << endl;
+            return;*/
         }
         
         data[nextIndex] = element;
         nextIndex++;
     }
 
-    int pop(){   //delete element
+    T pop(){   //delete element
 
         if(isEmpty()){
             cout << "The stack is empty." << endl;
-            return INT_MIN;
+            return 0;
         }
 
         nextIndex--;
         return data[nextIndex];
     }
 
-    int top() {
+    T top() {
 
         if(isEmpty()){
             cout << "The stack is empty." << endl;
-            return INT8_MIN;
+            return 0;
         }
 
         return data[nextIndex -1];

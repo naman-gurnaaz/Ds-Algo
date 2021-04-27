@@ -1,10 +1,11 @@
 #include <iostream>
 using namespace std;
 #include "StackUsingArray.cpp"
+#include "StackUsingLL.cpp"
 
 int main(){
 
-    StackUsingArray s1(4);
+    Stack s1;
     s1.push(10);
     s1.push(20);
     s1.push(30);
@@ -17,7 +18,7 @@ int main(){
     cout << s1.pop() << endl;
     cout << s1.pop() << endl;
 
-    cout << s1.size() << endl;
+    cout << s1.getSize() << endl;
 
     cout << s1.isEmpty() << endl;
 }
