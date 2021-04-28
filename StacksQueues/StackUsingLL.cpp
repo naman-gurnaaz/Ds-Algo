@@ -1,21 +1,23 @@
 #include<iostream>
 using namespace std;
+template <typename H>
 
 class Node {
 
     public:
-    int data;
-    Node *next;
+    H data;
+    Node<H> *next;
     
-    Node(int data){
+    Node(H data){
         this -> data = data;
         next = nullptr;
     }
 
 };
 
+template <typename H>
 class Stack {
-    Node *head;
+    Node<H> *head;
     int size;
 
     public:
@@ -33,23 +35,28 @@ class Stack {
         return (size == 0);
     }
 
-    void push(int element){
-        Node *newNode = new Node(element);
+    void push(H element){
+        Node<H> *newNode = new Node<H>(element);
         newNode -> next = head;
         head = newNode;
         size++;
     }
 
-    int pop() {
-        int temp = head->data;
-        Node* c = head -> next;
+    H pop() {
+        if(head == nullptr){
+            cout<<"The stack is empty."<<endl;
+        
+        }
+
+        H temp = head->data;
+        Node<H> *c = head -> next;
         delete head;
         head = c;
         size--;
         return temp;
     }
 
-    int top() {
+    H top() {
         return head->data;
     }
 
