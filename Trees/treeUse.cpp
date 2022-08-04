@@ -19,6 +19,8 @@ TreeNode<int>* takeInput(){
 
 }
 
+
+
 TreeNode<int>* takeInputLevelWise(){
     int rootData;
     cout << "Enter Data: "<< endl;
@@ -45,6 +47,8 @@ TreeNode<int>* takeInputLevelWise(){
     return root;
 
 }
+
+
 
 void printTreeLevelWise(TreeNode<int> *root){
     if(root == nullptr){
@@ -77,6 +81,8 @@ void printTreeLevelWise(TreeNode<int> *root){
     
 }
 
+
+
 int countNodes(TreeNode <int>*root){
     if(root == nullptr){
         return 0;
@@ -89,6 +95,7 @@ int countNodes(TreeNode <int>*root){
 }
 
 
+
 int sumOfNodes(TreeNode <int>*root){
     if(root == nullptr){
         return 0;
@@ -99,6 +106,7 @@ int sumOfNodes(TreeNode <int>*root){
     }
     return sum;
 }
+
 
 
 TreeNode<int>* maxDataNode(TreeNode<int> *root){
@@ -115,6 +123,8 @@ TreeNode<int>* maxDataNode(TreeNode<int> *root){
     return max;
 }
 
+
+
 void printTree(TreeNode<int>* root){
     if(root == nullptr){
         return;
@@ -128,6 +138,7 @@ void printTree(TreeNode<int>* root){
         printTree(root->children[i]);
     }
 }
+
 
 
 int heightOfTree(TreeNode<int> *root){
@@ -144,6 +155,8 @@ int heightOfTree(TreeNode<int> *root){
     return maxHeight+1;
 }
 
+
+
 void printAtLevelK(TreeNode<int> *root, int k){
     if(root == nullptr){
         return;
@@ -156,6 +169,7 @@ void printAtLevelK(TreeNode<int> *root, int k){
         printAtLevelK(root->children[i], k-1);
     }
 }
+
 
 
 int countLeafNodes(TreeNode<int> *root){
@@ -176,13 +190,90 @@ int countLeafNodes(TreeNode<int> *root){
 
 
 
+bool containX(TreeNode<int> *root, int x){     //check if the tree contains the integer x.
+    
+    if(root == nullptr){
+        return 0;
+    }
+
+    queue <TreeNode<int>*> q;
+    q.push(root);
+
+    while (!q.empty()){
+        TreeNode<int> *p = q.front();
+        q.pop();
+
+        if(p->data == x){
+            return true;
+        }
+        for(int i = 0; i< root->children.size(); i++){
+            q.push(p->children[i]);
+        }
+    }
+    
+    return false;
+
+}
+
+
+
+bool structureIdentical(TreeNode<int> *root1, TreeNode<int> *root2){   //check if the two trees have identical structure or not
+    if(root1==nullptr && root2==nullptr){
+        return true;
+    }
+    if(root1!=nullptr && root2==nullptr || root1==nullptr && root2!=nullptr){
+        return false;
+    }
+    if(root1->data != root2->data || root1->children.size() != root2->children.size()){
+        return false;
+    }
+    int i =0;
+    while(i<root1->children.size()){
+        TreeNode<int> *child1 = root1->children[i];
+        TreeNode<int> *child2 = root2->children[i];
+
+        if(structureIdentical(child1, child2)){
+            i++;
+        }
+        else{
+            return false;
+        }
+    }
+    return true;
+}
+
+
+
+void depthHelper(TreeNode<int> *root, int depth){
+    root->data = depth;
+    for(int i = 0; i<root->children.size(); i++){
+        depthHelper(root->children[i], depth+1);
+    }
+}
+//replace the treenode data with depth of the node ↑↑ and ↓↓ both functions.
+void replaceWithDepth(TreeNode<int> *root){
+    if(root == nullptr){
+        return;
+    }
+    int depth = 0;
+    depthHelper(root, depth);
+    
+}
+
+
+
+
 
 //1 3 2 3 4 2 5 6 2 7 8 0 0 0 0 1 9 0
+
 int main(){
 
-    TreeNode<int> *root = takeInputLevelWise();
-    printTreeLevelWise(root);
+    TreeNode<int> *root1 = takeInputLevelWise();
+    //TreeNode<int> *root2 = takeInputLevelWise();
     cout << endl;
-    printAtLevelK(root, 2);
-    delete root;
+    replaceWithDepth(root1);
+    printTreeLevelWise(root1);
+    //printTreeLevelWise(root2);
+    
+    //cout<< structureIdentical(root1, root2)<<endl;
 }
