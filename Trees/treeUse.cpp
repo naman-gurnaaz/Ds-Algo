@@ -261,7 +261,19 @@ void replaceWithDepth(TreeNode<int> *root){
 }
 
 
-
+TreeNode<int>* nextLarger(TreeNode<int> *root, int n){
+    if(root ==nullptr){
+        return nullptr;
+    }
+    TreeNode<int>* result;
+    if(root->data > n && root->data < result->data){
+        result = root;
+    }
+    for(int i=0; i<root->children.size(); i++){
+        nextLarger(root->children[i], n); 
+    }
+    return result;
+}
 
 
 //1 3 2 3 4 2 5 6 2 7 8 0 0 0 0 1 9 0
@@ -271,8 +283,8 @@ int main(){
     TreeNode<int> *root1 = takeInputLevelWise();
     //TreeNode<int> *root2 = takeInputLevelWise();
     cout << endl;
-    replaceWithDepth(root1);
-    printTreeLevelWise(root1);
+    TreeNode<int> *ans =  nextLarger(root1, 3);
+    cout<< ans->data <<endl;
     //printTreeLevelWise(root2);
     
     //cout<< structureIdentical(root1, root2)<<endl;
