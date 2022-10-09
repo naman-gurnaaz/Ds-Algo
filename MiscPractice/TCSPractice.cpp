@@ -102,7 +102,7 @@ int fact(int n){
     if(n==1 || n==0){
         return 1;
     }
-    return (n+fact(n-1));
+    return (n*fact(n-1));
 }
 
 
@@ -419,8 +419,103 @@ bool isArmstrong(int n){
 }
 
 
+/*
+Given an array Arr[ ] of N integers and a positive integer K. The task is to cyclically rotate the array clockwise by K.
+
+Note : Keep the first of the array unaltered.
+
+ 
+
+Example 1:
+
+5  —Value of N
+{10, 20, 30, 40, 50}  —Element of Arr[ ]
+2  —–Value of K
+Output :
+
+40 50 10 20 30
+
+Example 2:
+
+4  —Value of N
+{10, 20, 30, 40}  —Element of Arr[]
+1  —–Value of K
+Output :
+
+40 10 20 30
+*/
+
+
+void cyclicallyRotate(int arr[], int n, int k){
+    if(n<=0){
+        return;
+    }
+    if(k > n){
+        k = k%n;
+    }
+    for(int i = 0; i < n; i++){
+        if(i < k){
+            cout << arr[n-k+i] << " ";
+        }else{
+            cout << arr[i-k] << " ";
+        }
+    }
+    cout << endl;
+}
+
+
+
+/*
+Given an input string word, split the string into exactly 3 palindromic substrings. Working from left to right, choose the smallest split for the first substring that still allows the remaining word to be split into 2 palindromes.
+
+Input: str = “ababbcb”
+Output: a bab bcb 
+Explanation: Possible splits are {“aba”, “b”, “bcb”} and {“a”, “bab”, “bcb”}.  Since, {“a”, “bab”, “bcb”} has splits at earlier indices, it is the required answer.
+*/
+
+
+bool isPalinString(string x){
+    if(x.length() == 1){
+        return true;
+    }
+    string y=x;
+    reverse(y.begin(), y.end());
+
+    if(x == y){
+        return true;
+    }
+    return false;
+}
+
+void Palindromes(string s){
+    string s1, s2, s3;
+    int n = s.length();
+
+    for(int i = 1; i < n-1; i++){
+        s1 = s.substr(0, i);
+        if(isPalinString(s1)){
+            for(int j = 1; j < n-i; j++){
+                s2 = s.substr(i, j);
+                s3 = s.substr(i+j, n);
+
+                if(isPalinString(s2) && isPalinString(s3)){
+                    cout << s1 << endl;
+                    cout << s2 << endl;
+                    cout << s3 << endl;
+                    return;
+                }
+            }
+        }else{
+            cout << "Not Possible" << endl;
+            return;
+        }
+    }
+
+}
+
+
 int main(){
-    int n;
+    string n;
     cin >> n;
-    cout << isArmstrong(n) << endl;
+    Palindromes(n);
 }

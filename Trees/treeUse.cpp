@@ -275,6 +275,41 @@ TreeNode<int>* nextLarger(TreeNode<int> *root, int n){
     return result;
 }
 
+int nodeSum(TreeNode<int> *root){
+    if(root == nullptr){
+        return 0;
+    }
+    int sum = 0;
+    for(int i=0; i < root->children.size(); i++){
+        sum = sum + root->children[i]->data;
+    }
+    return sum;
+}
+
+TreeNode<int>* nodeWithMaxChildSum(TreeNode<int> *root){
+
+    if(root == nullptr){
+        return nullptr;
+    }
+    if(root -> children.size() == 0){
+        return root;
+    }
+    TreeNode<int>* current = root;
+    int currSum = nodeSum(root);
+    for(int i=0; i<root->children.size(); i++){
+        TreeNode<int> *ans = nodeWithMaxChildSum(root->children[i]);
+        int sum = nodeSum(ans);
+        if(currSum < sum){
+            currSum = sum;
+            current = ans;
+        }
+    }
+    return current;
+
+}
+
+
+
 
 //1 3 2 3 4 2 5 6 2 7 8 0 0 0 0 1 9 0
 
